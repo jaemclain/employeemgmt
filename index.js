@@ -99,5 +99,40 @@ function addRole() {
             console.table("Added Role");
             start()
         })
-    })
-}
+    });
+};
+
+
+// Add a Employee
+function addEmployee(){
+    inquirer.prompt([
+        {
+            name: "first_name",
+            message: "What is the employee's first name?",
+            type: "input"
+        },
+        {
+            name: "last_name",
+            message: "What is the employee's last name?",
+            type: "input"
+        },
+        {
+            name: "role_id",
+            message: "What is the role Id?",
+            type: "list",
+            choices: [1, 2, 3, 4]
+        },
+        {
+            name: "manager_id",
+            message: "What is the manager Id?",
+            type: "input"
+        }
+    ]).then(function(answers){
+        connection.query("INSERT INTO employee SET ?", {first_name: answers.first_name, last_name: answers.last_name, role_id: answers.role_id, manager_id: answers.manager_id},
+        function (err, res){
+            if (err) throw err
+            console.table("Added Employee");
+            start()
+        })
+    });
+};
