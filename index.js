@@ -12,8 +12,8 @@ var connection = mysql.createConnection({
 });
 
 // Connect to server and db
-connection.connect(function(err){
-    if(err) throw err;
+connection.connect(function (err) {
+    if (err) throw err;
     start();
 });
 
@@ -33,25 +33,42 @@ function start() {
             "View Employees",
             "Update Employee Role",
             "Leave"
-    ]
-    }).then(function ({options}) {
-        if (options === "Add a Department"){
+        ]
+    }).then(function ({ options }) {
+        if (options === "Add a Department") {
             addDepartment()
-        } else if (options === "Add a Role"){
+        } else if (options === "Add a Role") {
             addRole()
-        } else if (options === "Add Employee"){
+        } else if (options === "Add Employee") {
             addEmployee()
-        } else if (options === "View Department"){
+        } else if (options === "View Department") {
             viewDepartment()
-        } else if (options === "View Roles"){
+        } else if (options === "View Roles") {
             viewRoles()
-        } else if (options === "View Employees"){
+        } else if (options === "View Employees") {
             viewEmployees()
-        } else if (options === "Update Employee Role"){
+        } else if (options === "Update Employee Role") {
             updateEmployeeRole()
         } else {
             connection.end()
             process.exit(0)
         }
-    })
+    });
+};
+
+
+// Add a Department
+function addDepartment() {
+    inquirer.prompt({
+        name: "name",
+        message: "What is the name of the department?",
+        type: "input"
+    }).then(function (answers) {
+        connection.query("INSERT INTO department SET ?", { name: answers.name }, function (err, res) {
+            if (err) throw err
+            console.log(response);
+            console.log("Added Department")
+            start()
+        })
+    });
 };
