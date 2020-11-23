@@ -16,3 +16,42 @@ connection.connect(function(err){
     if(err) throw err;
     start();
 });
+
+
+// List of options to start
+function start() {
+    inquirer.prompt({
+        name: "options",
+        message: "Please choose an option from the following...",
+        type: "list",
+        choices: [
+            "Add a Department",
+            "Add a Role",
+            "Add Employee",
+            "View Department",
+            "View Roles",
+            "View Employees",
+            "Update Employee Role",
+            "Leave"
+    ]
+    }).then(function ({options}) {
+        if (options === "Add a Department"){
+            addDepartment()
+        } else if (options === "Add a Role"){
+            addRole()
+        } else if (options === "Add Employee"){
+            addEmployee()
+        } else if (options === "View Department"){
+            viewDepartment()
+        } else if (options === "View Roles"){
+            viewRoles()
+        } else if (options === "View Employees"){
+            viewEmployees()
+        } else if (options === "Update Employee Role"){
+            updateEmployeeRole()
+        } else {
+            connection.end()
+            process.exit(0)
+        }
+    })
+};
