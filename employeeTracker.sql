@@ -34,4 +34,12 @@ create TABLE employee (
     PRIMARY KEY (id),
     FOREIGN KEY (role_id) REFERENCES role (id),
     FOREIGN KEY (manager_id) REFERENCES employee (id)
-)
+);
+
+-- Relations
+SELECT first_name, last_name FROM employee INTEGER JOIN role on role_id = role.id;
+SELECT name, id FROM department INNER JOIN role on department.id = department_id;
+SELECT first_name, last_name, title, salary, department_id FROM role INNER JOIN employee on role_id;
+SELECT name, title, salary, fist_name, last_name from department
+INNER JOIN role on department.id = department_id
+INNER JOIN employee on role.id = role_id WHERE WHERE (name=?), [viewbydepartment];

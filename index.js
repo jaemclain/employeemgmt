@@ -136,3 +136,58 @@ function addEmployee(){
         })
     });
 };
+
+
+// View Departments
+const viewDepartment = () =>{
+    connection.query("SELECT * FROM department", function (err, response){
+        if (err) throw err
+        console.log("View Department", response)
+        start()
+    });
+};
+const getDepartment = async () => {
+    try {
+        const departmentData = await readDepartments_results[0]
+        console.table(departmentsData);
+        start();
+    } catch (err){
+        console.log(err)
+    }
+};
+
+// View Roles
+const viewRoles = () =>{
+    connection.query("SELECT * FROM role", function (err, response){
+        if (err) throw err
+        console.log("View Roles", response)
+        start()
+    });
+};
+const getRoles = async () => {
+    try {
+        const rolesData = await readRoles_results[0]
+        console.table(rolesData);
+        start();
+    } catch (err){
+        console.log(err)
+    }
+};
+
+// View Employee
+const viewEmployees = () =>{
+    connection.query("SELECT * FROM employee", function (err, response){
+        if (err) throw err
+        console.log("View Employee", response)
+        start()
+    });
+};
+const getEmployees = async () => {
+    try {
+        const employeesData = await readEmployees_results[0]
+        console.table(employeesData);
+        start();
+    } catch (err){
+        console.log(err)
+    }
+};
