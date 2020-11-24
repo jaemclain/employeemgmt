@@ -1,6 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-const { start } = require("repl");
+// const { start } = require("repl");
 
 // Connection to mysql db
 var connection = mysql.createConnection({
@@ -20,6 +20,8 @@ connection.connect(function (err) {
 
 // List of options to start
 function start() {
+
+
     inquirer.prompt({
         name: "options",
         message: "Please choose an option from the following...",
@@ -47,30 +49,29 @@ function start() {
             viewRoles()
         } else if (options === "View Employees") {
             viewEmployees()
-        } else if (options === "Update Employee Role") {
-            updateEmployeeRole()
         } else {
             connection.end()
             process.exit(0)
         }
-    });
-};
+    })
+}
+
 
 
 // Add a Department
 function addDepartment() {
     inquirer.prompt({
         name: "name",
-        message: "What is the name of the department?",
-        type: "input"
+        type: "input",
+        message: "What is the name of the department?"
     }).then(function (answers) {
-        connection.query("INSERT INTO department SET ?", { name: answers.name }, function (err, res) {
+        connection.query("INSERT INTO department SET ?", { name: answers.name }, function (err, response) {
             if (err) throw err
             console.log(response);
             console.log("Added Department")
             start()
         })
-    });
+    })
 };
 
 
@@ -92,19 +93,19 @@ function addRole() {
         type: "list",
         choices: [1, 2, 3]
     }
-    ]).then(function(answers){
-        connection.query("INSERT INTO role SET ?", {title: answers.title, salary: answers.salary, department_id: answers.department_id},
-        function (err){
-            if (err) throw err
-            console.table("Added Role");
-            start()
-        })
-    });
-};
+    ]).then(function (answers) {
+        connection.query("INSERT INTO role SET ?", { title: answers.title, salary: answers.salary, department_id: answers.department_id },
+            function (err) {
+                if (err) throw err
+                console.table("Added Role");
+                start()
+            })
+    })
+}
 
 
 // Add a Employee
-function addEmployee(){
+function addEmployee() {
     inquirer.prompt([
         {
             name: "first_name",
@@ -127,20 +128,20 @@ function addEmployee(){
             message: "What is the manager Id?",
             type: "input"
         }
-    ]).then(function(answers){
-        connection.query("INSERT INTO employee SET ?", {first_name: answers.first_name, last_name: answers.last_name, role_id: answers.role_id, manager_id: answers.manager_id},
-        function (err, res){
-            if (err) throw err
-            console.table("Added Employee");
-            start()
-        })
+    ]).then(function (answers) {
+        connection.query("INSERT INTO employee SET ?", { first_name: answers.first_name, last_name: answers.last_name, role_id: answers.role_id, manager_id: answers.manager_id },
+            function (err, res) {
+                if (err) throw err
+                console.table("Added Employee");
+                start()
+            })
     });
 };
 
 
 // View Departments
-const viewDepartment = () =>{
-    connection.query("SELECT * FROM department", function (err, response){
+const viewDepartment = () => {
+    connection.query("SELECT * FROM department", function (err, response) {
         if (err) throw err
         console.log("View Department", response)
         start()
@@ -151,14 +152,14 @@ const getDepartment = async () => {
         const departmentData = await readDepartments_results[0]
         console.table(departmentsData);
         start();
-    } catch (err){
+    } catch (err) {
         console.log(err)
     }
 };
 
 // View Roles
-const viewRoles = () =>{
-    connection.query("SELECT * FROM role", function (err, response){
+const viewRoles = () => {
+    connection.query("SELECT * FROM role", function (err, response) {
         if (err) throw err
         console.log("View Roles", response)
         start()
@@ -169,14 +170,14 @@ const getRoles = async () => {
         const rolesData = await readRoles_results[0]
         console.table(rolesData);
         start();
-    } catch (err){
+    } catch (err) {
         console.log(err)
     }
 };
 
 // View Employee
-const viewEmployees = () =>{
-    connection.query("SELECT * FROM employee", function (err, response){
+const viewEmployees = () => {
+    connection.query("SELECT * FROM employee", function (err, response) {
         if (err) throw err
         console.log("View Employee", response)
         start()
@@ -187,7 +188,7 @@ const getEmployees = async () => {
         const employeesData = await readEmployees_results[0]
         console.table(employeesData);
         start();
-    } catch (err){
+    } catch (err) {
         console.log(err)
     }
 };
